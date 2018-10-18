@@ -13,6 +13,7 @@ app.use(Parser.json());
 app.use(Parser.urlencoded({extended: true}));
 
 
+
 app.get('/', (req, res) => {
     User.findAll().then(users => {
         res.json({
@@ -40,7 +41,7 @@ app.post('/api/user/add', (req, res) => {
         // }));
     }).catch(err => {
         res.json({
-            status: 'Failed',
+            status: 'failed',
             message: ''
         });
         console.log('err', err);
@@ -54,40 +55,48 @@ app.put('/api/user/edit', (req, res) => {
         phoneNumber: req.body.phoneNumber,
         address: req.body.address
     }, {
-        where:{
+        where: {
             userID: req.body.userID
         }
-    }).then(user =>{
+    }).then(user => {
         res.json({
             status: 'success',
             result: user
         });
-    }).catch(err =>{
+    }).catch(err => {
         res.json({
-            status: 'Failed',
+            status: 'failed',
             message: ''
         });
     })
 });
 
 
-app.delete('/api/user/delete', (req, res)=>{
+app.delete('/api/user/delete', (req, res) => {
     User.destroy({
-        where:{
+        where: {
             userID: req.body.userID
         }
-    }).then(user =>{
+    }).then(user => {
         res.json({
             status: 'success',
             result: user
         });
-    }).catch(err =>{
+    }).catch(err => {
         res.json({
-            status: 'Failed',
+            status: 'failed',
             message: ''
         });
     })
-})
+});
+
+app.get('/users', (req, res) => {
+    res.sendFile(__dirname + '/angular/index.html');
+});
+
+app.get('/user/add', (req, res) => {
+    res.sendFile(__dirname + '/angular/addUser.html');
+});
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

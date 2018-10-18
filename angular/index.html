@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <script src="//code.angularjs.org/1.7.5/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <link href="//getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+    <link href="//getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="//getbootstrap.com/2.3.2/assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+</head>
+
+<body ng-app="angularApp" ng-controller="getDataUser">
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">Project User</a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Sidebar</li>
+                    <li class="active"><a href="#">Data User</a></li>
+                    <li><a href="/user/add">Tambah User</a></li>
+                </ul>
+            </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+
+            <div class="hero-unit">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>nama</th>
+                        <th>email</th>
+                        <th>phone</th>
+                        <th>adress</th>
+                        <th>action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(key, value) in myData.data.result">
+                        <td>{{value.name}}</td>
+                        <td>{{value.email}}</td>
+                        <td>{{value.phoneNumber}}</td>
+                        <td>{{value.address}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Action
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">HTML</a></li>
+                                    <li><a href="#">CSS</a></li>
+                                    <li><a href="#">JavaScript</a></li>
+                                    <!-- dropdown menu links -->
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--/row-->
+        </div><!--/span-->
+    </div><!--/row-->
+
+    <hr>
+
+    <footer>
+        <p>&copy; Company 2013</p>
+    </footer>
+
+</div><!--/.fluid-container-->
+
+<script>
+    // var user = angular.module('userApp', ['ngRoute']);
+//     user.config(['$routeProvider', function ($routeProvider) {
+//         $routeProvider
+//         //     .when('/addUser', {
+//         //     templateUrl: 'view/user/addUser.html',
+//         //     // controller: 'addUserController'
+//         // })
+//             .when('/', {
+//                 templateUrl: 'view/user/dataUser.html',
+// // controller:'getDataUser'
+//             });
+//     }]);
+    var app = angular.module('angularApp', []);
+    console.log('coba 2');
+    app.controller('getDataUser', function ($scope, $http) {
+        console.log('get data')
+        $scope.myData = "";
+        $http.get('http://localhost:3000/').then(function (response) {
+            $scope.myData = response;
+            console.log('get data coba', $scope.myData.data);
+        });
+    });
+</script>
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+</body>
+</html>
