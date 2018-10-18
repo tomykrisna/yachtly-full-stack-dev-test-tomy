@@ -87,18 +87,8 @@
                         <td>{{value.phoneNumber}}</td>
                         <td>{{value.address}}</td>
                         <td>
-                            <div class="btn-group">
-                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                    Action
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">HTML</a></li>
-                                    <li><a href="#">CSS</a></li>
-                                    <li><a href="#">JavaScript</a></li>
-                                    <!-- dropdown menu links -->
-                                </ul>
-                            </div>
+                            <a class="btn btn-primary" href="#">Edit</a>
+                            <a class="btn btn-primary" ng-click="deleteUser(value.userID)">Delete</a>
                         </td>
                     </tr>
                     </tbody>
@@ -117,18 +107,7 @@
 </div><!--/.fluid-container-->
 
 <script>
-    // var user = angular.module('userApp', ['ngRoute']);
-//     user.config(['$routeProvider', function ($routeProvider) {
-//         $routeProvider
-//         //     .when('/addUser', {
-//         //     templateUrl: 'view/user/addUser.html',
-//         //     // controller: 'addUserController'
-//         // })
-//             .when('/', {
-//                 templateUrl: 'view/user/dataUser.html',
-// // controller:'getDataUser'
-//             });
-//     }]);
+
     var app = angular.module('angularApp', []);
     console.log('coba 2');
     app.controller('getDataUser', function ($scope, $http) {
@@ -138,6 +117,31 @@
             $scope.myData = response;
             console.log('get data coba', $scope.myData.data);
         });
+        $scope.deleteUser = function (userID) {
+            $scope.userIdUser = {
+                // params: {
+                userID: angular.copy(userID)
+                // }
+            };
+            console.log('userID', $scope.userIdUser);
+            $scope.deleteResponse = "";
+            $http({
+                method: 'DELETE',
+                url: 'http://localhost:3000/api/user/delete',
+                data: $scope.userIdUser,
+                headers: {
+                    'Content-type': 'application/json;charset=utf-8'
+                }
+            }).then(function (response) {
+                $scope.deleteResponse = response;
+                if (response.data.status == 'success' && response.data.result > 0) {
+                    alert('Deleted');
+                    window.location.reload();
+                }
+                console.log('delete', $scope.deleteResponse);
+            });
+
+        }
     });
 </script>
 
