@@ -118,5 +118,8 @@ app.get('/user/edit/:userID', (req, res) => {
     res.sendFile(__dirname + '/angular/editUser.html');
 });
 
+app.get('/app', (req, res) => {
+    res.sendFile(__dirname + '/angular/editUser.html');
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
