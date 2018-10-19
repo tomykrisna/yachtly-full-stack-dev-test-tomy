@@ -12,6 +12,9 @@ const User = sequelize.import(__dirname + '/models/user');
 app.use(Parser.json());
 app.use(Parser.urlencoded({extended: true}));
 
+app.use('/public', express.static('dist/public'));
+app.use('/app/public', express.static('dist/public'));
+
 
 app.get('/', (req, res) => {
     User.findAll().then(users => {
@@ -119,7 +122,11 @@ app.get('/user/edit/:userID', (req, res) => {
 });
 
 app.get('/app', (req, res) => {
-    res.sendFile(__dirname + '/angular/editUser.html');
+    res.sendFile(__dirname + '/dist/index.html');
+});
+
+app.get('/app', (req, res) => {
+    res.sendFile(__dirname + '/dist/index.html');
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
