@@ -62,7 +62,8 @@ app.post('/api/user/add', (req, res) => {
     }).catch(err => {
         res.json({
             status: 'failed',
-            message: ''
+            message: '',
+            data: req.body
         });
     });
 });
@@ -125,7 +126,7 @@ app.get('/app', (req, res) => {
     res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.get('/app', (req, res) => {
+app.get('/app/*', (req, res) => {
     res.sendFile(__dirname + '/dist/index.html');
 });
 
