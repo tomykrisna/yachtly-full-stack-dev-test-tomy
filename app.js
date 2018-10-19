@@ -13,7 +13,6 @@ app.use(Parser.json());
 app.use(Parser.urlencoded({extended: true}));
 
 
-
 app.get('/', (req, res) => {
     User.findAll().then(users => {
         res.json({
@@ -24,8 +23,29 @@ app.get('/', (req, res) => {
 
 });
 
+app.get('/api/user/detail/:userID', (req, res) => {
+    User.findAll({
+        where: {
+            userID: req.params.userID
+        }
+    }).then(users => {
+        if (users.length > 0) {
+
+            res.json({
+                status: 'success',
+                result: users[0]
+            });
+        } else {
+            res.json({
+                status: 'failed',
+                message: 'user not found'
+            });
+        }
+    })
+
+});
+
 app.post('/api/user/add', (req, res) => {
-    console.log('req', req.body);
     User.create({
         name: req.body.name,
         email: req.body.email,
@@ -36,15 +56,11 @@ app.post('/api/user/add', (req, res) => {
             status: 'success',
             result: user
         });
-        // console.log(user.get({
-        //     plain: true
-        // }));
     }).catch(err => {
         res.json({
             status: 'failed',
             message: ''
         });
-        console.log('err', err);
     });
 });
 
@@ -96,6 +112,10 @@ app.get('/users', (req, res) => {
 
 app.get('/user/add', (req, res) => {
     res.sendFile(__dirname + '/angular/addUser.html');
+});
+
+app.get('/user/edit/:userID', (req, res) => {
+    res.sendFile(__dirname + '/angular/editUser.html');
 });
 
 
